@@ -28,6 +28,8 @@ const WriteArticle = () => {
       setLoading(true);
       const prompt = `Write an article about ${input} in ${selectedLength}`;
 
+      // 向后端 /api/ai/generate-article 接口发送一个 POST 请求，
+      // 携带 prompt 和文章长度参数，并在请求头中带上 JWT 用于身份认证，最后拿到返回的数据。
       const { data } = await axios.post(
         "/api/ai/generate-article",
         { prompt, length: selectedLength.length },

@@ -56,6 +56,7 @@ export const generateArticle = async (req, res) => {
   }
 };
 
+
 export const generateBlogTitle = async (req, res) => {
   try {
     const { userId } = req.auth();
@@ -139,6 +140,7 @@ export const generateImage = async (req, res) => {
   }
 };
 
+// 使用cloudinary的背景移除功能，Cloudinary 会自动在云端处理图片，然后返回新图像的 URL。
 export const removeImageBackground = async (req, res) => {
   try {
     const { userId } = req.auth();
@@ -221,8 +223,10 @@ export const resumeReview = async (req, res) => {
     }
 
     const dataBuffer = fs.readFileSync(resume.path);
+    // 解析PDF内容, pdf-parse返回一个包含文本内容的对象,pdfData.text是提取的文本内容
     const pdfData = await pdf(dataBuffer);
 
+    // 构建提示语，指导AI进行简历评审
     const prompt = `Review the following resume and provide constructive feedback on its strengths, weakness, and areas for improvement. Resume Content:\n\n${pdfData.text}`;
 
     const response = await AI.chat.completions.create({
